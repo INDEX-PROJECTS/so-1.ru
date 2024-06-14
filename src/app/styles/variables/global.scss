@@ -1,0 +1,30 @@
+/* stylelint-disable scss/double-slash-comment-whitespace-inside */
+:root {
+    // fonts
+    --font-family-main: "Noto Sans", sans-serif;
+    --navbar-height: 184px;
+
+    //backgrounds
+    --bg-primary: #fff;
+    --bg-black: #000;
+    --border-form: #e2e2e2;
+
+    //colors
+    --color-white: #fff;
+    --color-white-hover: #666;
+    --color-white-active: #333;
+    --text-color-placeholder: #989898;
+    --color-arrow: #d1d1d1;
+    --color-arrow-hover: #bebebe;
+    --color-grey: #747474;
+    --color-bg-card: #f3f3f3;
+    --text-primary: #000;
+    --text-primary-hover: #292929;
+    --text-primary-active: #3d3d3d;
+    --overlay-color: rgb(0 0 0 / 71.2%);
+
+    //transition
+    --transition-default: 0.2s ease-in-out;
+    --z-index-modal: 100;
+    --z-index-navbar: 10;
+}

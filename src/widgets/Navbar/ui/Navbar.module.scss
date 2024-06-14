@@ -1,0 +1,52 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    z-index: var(--z-index-navbar);
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 24px;
+    padding: 20px 0;
+}
+
+.menuContainer {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 24px;
+    padding: 16px 24px;
+    background-color: var(--bg-black);
+    border-radius: 80px;
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    flex: none;
+    color: var(--color-white);
+}
+
+.item {
+    &:hover {
+        .icon {
+            transition: color var(--transition-default);
+            color: var(--color-white-hover);
+        }
+    }
+
+    &:active {
+        .icon {
+            transition: color var(--transition-default);
+            color: var(--color-white-active);
+        }
+    }
+}

@@ -1,0 +1,37 @@
+.CircleLink {
+    outline: 32px solid var(--color-white);
+    background: var(--bg-black);
+    color: var(--color-white);
+    padding: 127px 0;
+    height: 368px;
+    width: 368px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 42px;
+    line-height: 57px;
+    text-align: center;
+
+    svg {
+        height: 32px;
+        width: 230px;
+        animation: arrow-animation 2s infinite linear;
+        transform: translateX(150px);
+    }
+}
+
+@keyframes arrow-animation {
+    0% {
+        transform: translateX(150px);
+    }
+
+    50% {
+        transform: translateX(170px);
+    }
+
+    100% {
+        transform: translateX(150px);
+    }
+}

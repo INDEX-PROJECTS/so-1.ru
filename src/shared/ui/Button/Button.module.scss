@@ -1,0 +1,86 @@
+/* stylelint-disable scss/no-global-function-names */
+/* stylelint-disable no-descending-specificity */
+.Button {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.buttonWrapper {
+    position: relative;
+}
+
+.helper {
+    background-color: var(--text-primary-hover);
+    border-radius: 10px;
+    padding: 16px 40px;
+    position: absolute;
+    width: 200px;
+    bottom: -80px;
+    right: -15px;
+    z-index: 2;
+
+    &::after {
+        position: absolute;
+        top: -15%;
+        right: 10%;
+        content: "";
+        width: 15px;
+        height: 15px;
+        border-radius: 3px;
+        z-index: -1;
+        transform: rotate(45deg);
+        background-color: var(--text-primary-hover);
+    }
+}
+
+.default_between,
+.default {
+    border-radius: 30px;
+    padding: 20px 32px;
+    color: white;
+    background-color: var(--text-primary);
+    filter: drop-shadow(-1px 1px 4px rgb(0 0 0 / 25%));
+
+    &:hover {
+        background-color: var(--text-primary-hover);
+    }
+
+    &:active {
+        background-color: var(--text-primary-active);
+        transform: scale(0.97);
+    }
+
+    &:disabled,
+    &[disabled] {
+        background-color: var(--text-primary-active);
+        pointer-events: none;
+    }
+}
+
+.default_between {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.svg_clear {
+    svg {
+        color: var(--color-arrow);
+        flex: none;
+    }
+
+    &:hover {
+        svg {
+            transition: color 0.2s ease-in-out;
+            color: var(--color-arrow-hover);
+        }
+    }
+}

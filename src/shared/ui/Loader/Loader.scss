@@ -1,0 +1,62 @@
+.mainLoader {
+    position: relative;
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin: 200px;
+}
+
+.mainLoader::before,
+.mainLoader::after {
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    inset: 0;
+    box-shadow: 0 0 10px 2px rgb(0 0 0 / 30%) inset;
+}
+
+.mainLoader::after {
+    box-shadow: 0 2px 0 var(--active-color-default) inset;
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.btnLoader {
+    position: relative;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: rotateBtn 1s linear infinite;
+    display: block;
+}
+
+.btnLoader::before {
+    content: "";
+    position: absolute;
+    border: 2px solid white;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: prixClipFix 2s linear infinite;
+    inset: 0;
+}
+
+@keyframes rotateBtn {
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes prixClipFix {
+    0% { clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0); }
+    25% { clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0); }
+    50% { clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%); }
+    75% { clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%); }
+    100% { clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0); }
+}

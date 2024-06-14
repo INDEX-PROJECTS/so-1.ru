@@ -1,0 +1,160 @@
+.image {
+    border-radius: 40px;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 148px 0 40px 40px;
+}
+
+.imageContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.logo {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    z-index: 2;
+}
+
+.shopContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+    padding: 148px 0 40px 216px;
+}
+
+.link {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    right: -5%;
+}
+
+.cardsContainer {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.submitBtn {
+    align-self: self-start;
+}
+
+.cardImageContainer {
+    width: 100%;
+    height: 262px;
+    margin-bottom: 16px;
+}
+
+.title {
+    margin-bottom: 40px;
+    font-weight: 600;
+    font-size: 42px;
+}
+
+.card {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    width: 234px;
+    height: 352px;
+    white-space: nowrap; /* запрещаем перенос текста на новую строку */
+    overflow: hidden; /* скрываем текст, выходящий за границы контейнера */
+    text-overflow: ellipsis; /* добавляем многоточие */
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+    padding: 148px 0 40px 350px;
+}
+
+.docContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+    padding: 148px 40px 40px;
+}
+
+.form {
+    position: relative;
+    background-color: var(--color-bg-card);
+    border-radius: 40px;
+    height: 100%;
+    padding: 40px 40px 40px 215px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: start;
+    text-align: right;
+}
+
+.formTitle {
+    line-height: 24px;
+    font-size: 18px;
+    font-weight: 500;
+    max-width: 500px;
+    margin-bottom: 42px;
+}
+
+.boxTitle {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 42px;
+    margin-bottom: 24px;
+}
+
+.boxSubtitle {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 24px;
+}
+
+.formCircle {
+    position: absolute;
+    top: 0;
+    left: -35%;
+}
+
+.boxContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+    gap: 32px;
+}
+
+.box {
+    background-color: var(--color-bg-card);
+    border-radius: 40px;
+    padding: 40px;
+    height: 100%;
+    width: 33%;
+}
+
+.text {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+}

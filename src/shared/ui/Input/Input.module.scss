@@ -1,0 +1,25 @@
+.FieldBox {
+    position: relative;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 32px;
+}
+
+.InputWrapper {
+    position: relative;
+    background-color: transparent;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border-form);
+}
+
+.input {
+    width: 100%;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    color: var(--text-color-placeholder);
+
+    &::placeholder {
+        color: var(--text-color-placeholder);
+    }
+}

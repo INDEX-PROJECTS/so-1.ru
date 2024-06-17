@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { memo } from 'react';
 
 import styles from './Checkbox.module.scss';
+import { Text, TextBold, TextSize } from '../Text/Text';
 
 interface CheckboxProps {
   className?: string;
@@ -22,6 +24,8 @@ export const Checkbox = memo(({
             className={styles.checkbox}
             {...props}
         />
-        <label htmlFor={id} className={styles.label}>{label}</label>
+        <label htmlFor={id} className={styles.label}>
+            <Text textPrimary title={label} size={TextSize.S} bold={TextBold.MEDIUM} gap="0" />
+        </label>
     </div>
 ));

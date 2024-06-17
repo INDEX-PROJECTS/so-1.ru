@@ -32,18 +32,18 @@
     height: 162px;
     width: 162px;
     flex: none;
-    outline: 1px solid var(--border-form);
-}
-
-.content {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 8px;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     gap: 24px;
+}
+
+.cartEmpty {
+    height: 100%;
+}
+
+.content {
+    height: 100%;
 }

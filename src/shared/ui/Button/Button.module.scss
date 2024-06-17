@@ -16,6 +16,33 @@
     position: relative;
 }
 
+.clear_comment {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 4px;
+    background-color: transparent;
+
+    svg {
+        width: 15px;
+        height: 15px;
+        flex: none;
+        color: var(--text-primary);
+    }
+
+    &:hover {
+        p {
+            transition: all 0.2s ease-in-out;
+            color: var(--text-primary);
+        }
+
+        svg {
+            transition: all 0.2s ease-in-out;
+            color: var(--active-color-default);
+        }
+    }
+}
+
 .helper {
     background-color: var(--text-primary-hover);
     border-radius: 10px;

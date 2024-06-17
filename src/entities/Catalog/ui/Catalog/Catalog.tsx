@@ -1,7 +1,7 @@
 /* eslint-disable ulbi-tv-plugin/layer-imports */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { memo, useEffect } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { useSelector } from 'react-redux';
@@ -11,10 +11,12 @@ import { useAppDispatch } from '@/app/Redux/store';
 import { fetchProducts } from '@/app/Redux/products/asyncActions';
 import { Text, TextSize } from '@/shared/ui/Text/Text';
 import { selectProductData } from '@/app/Redux/products/selectors';
-import { Status } from '@/app/Redux/products/types';
+import { IProduct, Status } from '@/app/Redux/products/types';
 import { Skeleton } from '@/shared/ui/Skeleton/Skeleton';
 import { VStack } from '@/shared/ui/Stack';
 import { CatalogCard } from '../CatalogCard/CatalogCard';
+import { CartItem } from '@/app/Redux/cart/types';
+import { addItem } from '@/app/Redux/cart/slice';
 
 interface CatalogProps {
   className?: string;
@@ -32,11 +34,19 @@ export const Catalog = memo(({ className }: CatalogProps) => {
         getProducts();
     }, []);
 
+    const onClickAddToCart = useCallback((product: IProduct) => {
+        const item: CartItem = {
+            ...product,
+            count: 0,
+        };
+        dispatch(addItem(item));
+    }, []);
+
     return (
         <div id="catalog" className={classNames(styles.Catalog, {}, [className])}>
 
             <div className={styles.container}>
-                <Text gap="32" title="Каталог" size={TextSize.XL} />
+                <Text gap="32" title="Каталог" size={TextSize.XL} className="title" />
 
                 <Swiper
                     direction="vertical"
@@ -72,7 +82,11 @@ export const Catalog = memo(({ className }: CatalogProps) => {
                             <SwiperSlide key={index}>
                                 {
                                     chunk.map((product, index) => (
-                                        <CatalogCard product={product} key={index} />
+                                        <CatalogCard
+                                            onClickAddToCart={onClickAddToCart}
+                                            product={product}
+                                            key={index}
+                                        />
                                     ))
                                 }
                             </SwiperSlide>

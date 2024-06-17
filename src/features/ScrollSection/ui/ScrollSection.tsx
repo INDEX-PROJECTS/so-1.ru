@@ -15,6 +15,7 @@ import { CircleLink } from '@/shared/ui/CircleLink/CircleLink';
 import { Input } from '@/shared/ui/Input/Input';
 import { Button, ThemeButton } from '@/shared/ui/Button/Button';
 import { Catalog } from '@/entities/Catalog';
+import { Text, TextSize } from '@/shared/ui/Text/Text';
 
 interface ScrollSectionProps {
   className?: string;
@@ -77,7 +78,7 @@ export const ScrollSection = memo(({ className }: ScrollSectionProps) => {
                     </div>
                     <Catalog />
 
-                    <div id="call-back" className="scroll-section">
+                    <div id="call-back" className="scroll-section-big">
                         <div className={styles.formContainer}>
                             <form className={styles.form}>
                                 <h3 className={styles.formTitle}>
@@ -96,10 +97,8 @@ export const ScrollSection = memo(({ className }: ScrollSectionProps) => {
 
                             </form>
                         </div>
-                    </div>
-                    <div id="for-users" className="scroll-section">
                         <div className={styles.docContainer}>
-                            <h2 className={styles.title}>Документация</h2>
+                            <Text gap="32" title="Документация" size={TextSize.XL} className="title" />
 
                             <div className={styles.boxContainer}>
 
@@ -206,6 +205,7 @@ export const ScrollSection = memo(({ className }: ScrollSectionProps) => {
 
                         </div>
                     </div>
+                    {/* <div id="for-users" className="scroll-section" /> */}
                 </div>
             </div>
         </section>

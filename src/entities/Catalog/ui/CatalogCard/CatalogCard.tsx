@@ -6,13 +6,15 @@ import { Text, TextBold, TextSize } from '@/shared/ui/Text/Text';
 import { IProduct } from '@/app/Redux/products/types';
 import { HStack, VStack } from '@/shared/ui/Stack';
 import { Button, ThemeButton } from '@/shared/ui/Button/Button';
+import { formatNumber } from '@/shared/utils/formatNumber';
 
 interface CatalogCardProps {
   className?: string;
   product: IProduct;
+  onClickAddToCart: (product: IProduct) => void;
 }
 
-export const CatalogCard = memo(({ className, product }: CatalogCardProps) => {
+export const CatalogCard = memo(({ className, product, onClickAddToCart }: CatalogCardProps) => {
     const [isDetailsVisible, setIsDetailsVisible] = useState(false);
 
     const toggleDetails = () => {
@@ -34,7 +36,7 @@ export const CatalogCard = memo(({ className, product }: CatalogCardProps) => {
                         />
                     </div>
 
-                    <Text gap="0" title={`${product.price} ₽`} bold={TextBold.BOLD} />
+                    <Text gap="0" title={`${formatNumber(product.price)} ₽`} bold={TextBold.BOLD} />
 
                     <Text gap="0" text={product.vendor_code} bold={TextBold.MEDIUM} />
 
@@ -57,7 +59,11 @@ export const CatalogCard = memo(({ className, product }: CatalogCardProps) => {
                             <Text gap="0" text={product.description} bold={TextBold.MEDIUM} />
                         </VStack>
 
-                        <Button theme={ThemeButton.DEFAULT} className={styles.btn}>
+                        <Button
+                            onClick={() => onClickAddToCart(product)}
+                            theme={ThemeButton.DEFAULT}
+                            className={styles.btn}
+                        >
                             Добавить
                         </Button>
 

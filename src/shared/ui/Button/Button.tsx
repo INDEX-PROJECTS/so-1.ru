@@ -14,6 +14,7 @@ import {
 export enum ThemeButton {
   CLEAR = 'clear',
   DEFAULT = 'default',
+  CLEAR_COMMENT = 'clear_comment',
   DEFAULT_BETWEEN = 'default_between',
   SVG_CLEAR ='svg_clear',
 }

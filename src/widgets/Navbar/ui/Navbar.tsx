@@ -1,14 +1,17 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { memo, useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import styles from './Navbar.module.scss';
+import { ReactComponent as CartIcon } from '../../../shared/assets/icons/cart-icon.svg';
 import { ReactComponent as EmptyCartIcon } from '../../../shared/assets/icons/cart-empty-icon.svg';
 import { ReactComponent as MailIcon } from '../../../shared/assets/icons/mail-icon.svg';
 import { ReactComponent as PhoneIcon } from '../../../shared/assets/icons/phone-icon.svg';
 import { ReactComponent as MessagesIcon } from '../../../shared/assets/icons/messages-icon.svg';
 import { CartModal } from '@/features/Cart';
 import { Button, ThemeButton } from '@/shared/ui/Button/Button';
+import { selectCart } from '@/app/Redux/cart/selectors';
 
 interface NavbarProps {
     className?: string;
@@ -17,6 +20,7 @@ interface NavbarProps {
 export const Navbar = memo(({ className }: NavbarProps) => {
     const [isAuthModal, setIsAuthModal] = useState(false);
 
+    const { items } = useSelector(selectCart);
     const onCloseModal = useCallback(() => {
         setIsAuthModal(false);
     }, []);
@@ -37,7 +41,12 @@ export const Navbar = memo(({ className }: NavbarProps) => {
 
             <div className={styles.menuContainer}>
                 <Button theme={ThemeButton.CLEAR} onClick={onShowModal} className={styles.item}>
-                    <EmptyCartIcon className={styles.icon} />
+                    {
+                        items.length > 0 ? (
+                            <CartIcon className={styles.icon} />
+                        ) : <EmptyCartIcon className={styles.icon} />
+                    }
+
                 </Button>
                 <Button
                     theme={ThemeButton.CLEAR}

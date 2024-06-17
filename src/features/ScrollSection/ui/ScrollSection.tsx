@@ -6,13 +6,15 @@ import {
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MainBgImage from '@/shared/assets/images/main-page-bg-image.png';
-import CardImage from '@/shared/assets/images/card-image.png';
 import styles from './ScrollSection.module.scss';
-import { Input } from '../Input/Input';
-import { Button, ThemeButton } from '../Button/Button';
+
 import { ReactComponent as ArrowIcon } from '@/shared/assets/icons/arrow-right-icon.svg';
 import { ReactComponent as Logo } from '@/shared/assets/icons/logo-icon.svg';
-import { CircleLink } from '../CircleLink/CircleLink';
+
+import { CircleLink } from '@/shared/ui/CircleLink/CircleLink';
+import { Input } from '@/shared/ui/Input/Input';
+import { Button, ThemeButton } from '@/shared/ui/Button/Button';
+import { Catalog } from '@/entities/Catalog';
 
 interface ScrollSectionProps {
   className?: string;
@@ -56,9 +58,6 @@ export const ScrollSection = memo(({ className }: ScrollSectionProps) => {
                 <div ref={sectionRef} className="scroll-section-inner">
                     <div id="main-section" className="scroll-section">
                         <div className={styles.container}>
-                            <Button onClick={onClick}>
-                                rfnfkjr
-                            </Button>
 
                             <div className={styles.imageContainer}>
                                 <img
@@ -76,39 +75,8 @@ export const ScrollSection = memo(({ className }: ScrollSectionProps) => {
 
                         </div>
                     </div>
-                    <div id="catalog" className="scroll-section">
-                        <div className={styles.shopContainer}>
-                            <h2 className={styles.title}>Каталог</h2>
+                    <Catalog />
 
-                            <div className={styles.cardsContainer}>
-
-                                {
-                                    [...Array(16)].map((_, index) => (
-                                        <div key={index} className={styles.card}>
-
-                                            <div className={styles.cardImageContainer}>
-                                                <img
-                                                    src={CardImage}
-                                                    className={styles.cardImage}
-                                                    alt="MainBg"
-                                                    height="100%"
-                                                    width="100%"
-                                                    draggable={false}
-                                                />
-                                            </div>
-
-                                            <h3 className="subTitle1">310 000 ₽</h3>
-                                            <p>serial number</p>
-
-                                            Product Name Product Name Product Name Product Name
-
-                                        </div>
-                                    ))
-                                }
-
-                            </div>
-                        </div>
-                    </div>
                     <div id="call-back" className="scroll-section">
                         <div className={styles.formContainer}>
                             <form className={styles.form}>
@@ -233,24 +201,6 @@ export const ScrollSection = memo(({ className }: ScrollSectionProps) => {
                                         оформления заказа онлайн
                                     </p>
 
-                                    {/* <h3 className={styles.boxTitle}>Политика возврата</h3>
-
-                                    <h4 className={styles.boxSubtitle}>
-                                        Отказ от заказа и возврат товара
-                                    </h4>
-
-                                    <p className={styles.text}>
-                                        — Отказ от заказа до момента его
-                                        получения Вы можете отказаться от заказа
-                                        заполнив форму обратной связи,
-                                        или обратившись по телефону: +7 982-348 20-13.
-                                        <br />
-                                        {' '}
-                                        <br />
-                                        — Возврат товара надлежащего качества
-                                        Вы можете вернуть товар надлежащего
-                                        качества в момент самовывоза со склада,
-                                    </p> */}
                                 </div>
                             </div>
 

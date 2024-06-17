@@ -1,0 +1,48 @@
+.Catalog {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardImageContainer {
+    width: 100%;
+    height: 262px;
+    margin-bottom: 16px;
+}
+
+.card {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    padding: 8px;
+    width: 234px;
+    height: 352px;
+}
+
+.title {
+    margin-bottom: 40px;
+    font-weight: 600;
+    font-size: 42px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+    padding: 144px 0 40px 216px;
+}
+
+.cardsContainer {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+}
+
+.swiperContainer {
+    height: 100%;
+}

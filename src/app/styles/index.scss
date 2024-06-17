@@ -71,3 +71,19 @@ body {
     transform: scale(0.9);
     transition: opacity 300ms, transform 300ms;
 }
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    position: relative;
+    text-align: center;
+    font-size: 18px;
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 32px;
+    justify-content: start;
+    align-items: center;
+}

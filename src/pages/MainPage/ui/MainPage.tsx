@@ -1,6 +1,5 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+import { ScrollSection } from '@/features/ScrollSection';
 import { Page } from '@/widgets/Page';
-import { ScrollSection } from '@/shared/ui/ScrollSection/ScrollSection';
 
 const MainPage = () => (
     <Page>

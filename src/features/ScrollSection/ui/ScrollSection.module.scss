@@ -25,15 +25,6 @@
     z-index: 2;
 }
 
-.shopContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    width: 100%;
-    height: 100%;
-    padding: 148px 0 40px 216px;
-}
-
 .link {
     position: absolute;
     display: flex;
@@ -41,37 +32,14 @@
     right: -5%;
 }
 
-.cardsContainer {
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-}
-
 .submitBtn {
     align-self: self-start;
-}
-
-.cardImageContainer {
-    width: 100%;
-    height: 262px;
-    margin-bottom: 16px;
 }
 
 .title {
     margin-bottom: 40px;
     font-weight: 600;
     font-size: 42px;
-}
-
-.card {
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 24px;
-    width: 234px;
-    height: 352px;
-    white-space: nowrap; /* запрещаем перенос текста на новую строку */
-    overflow: hidden; /* скрываем текст, выходящий за границы контейнера */
-    text-overflow: ellipsis; /* добавляем многоточие */
 }
 
 .formContainer {

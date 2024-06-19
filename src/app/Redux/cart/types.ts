@@ -7,4 +7,6 @@ export interface CartItem extends IProduct {
 export interface CartSliceState {
   totalPrice: number;
   items: CartItem[];
+  isCartModelOpen: boolean;
+  isOrderModel: boolean;
 }

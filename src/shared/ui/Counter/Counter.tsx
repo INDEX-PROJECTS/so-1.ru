@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 
 import {
-    ChangeEvent, memo, useCallback, useEffect, useState,
+    ChangeEventHandler, memo, useCallback, useEffect, useState,
 } from 'react';
 import styles from './Counter.module.scss';
 import { ReactComponent as MinusIcon } from '@/shared/assets/icons/minus-icon.svg';
@@ -12,10 +12,16 @@ import { classNames } from '@/shared/lib/classNames/classNames';
 
 interface CounterProps {
   className?: string;
+  count: number;
+  onChangeInputValue: ChangeEventHandler<HTMLInputElement>;
+  onClickIncrement: () => void;
+  onClickDecrement: () => void;
 }
 
-export const Counter = memo(({ className }: CounterProps) => {
-    const [count, setCount] = useState(0);
+export const Counter = memo((props: CounterProps) => {
+    const {
+        className, onClickIncrement, onClickDecrement, count, onChangeInputValue,
+    } = props;
     const [width, setWidth] = useState(10);
 
     const [isInputActive, setIsInputActive] = useState(false);
@@ -42,29 +48,9 @@ export const Counter = memo(({ className }: CounterProps) => {
         setIsInputActive(false);
     }, []);
 
-    const handleIncrement = useCallback(() => {
-        setCount((prevCount) => prevCount + 1);
-    }, []);
-
-    const handleDecrement = useCallback(() => {
-        if (count > 0) {
-            setCount((prevCount) => prevCount - 1);
-        }
-    }, [count]);
-
-    const handleInputChange = useCallback(
-        (event : ChangeEvent<HTMLInputElement>) => {
-            const newCount = Number(event.target.value);
-            if (!Number.isNaN(newCount)) {
-                setCount(newCount);
-            }
-        },
-        [],
-    );
-
     return (
         <div className={classNames(styles.Counter, {}, [className])}>
-            <button onClick={handleDecrement} disabled={count === 0} type="button" className={styles.btn}>
+            <button onClick={onClickDecrement} disabled={count === 1} type="button" className={styles.btn}>
                 <MinusIcon className={styles.icon} />
             </button>
 
@@ -76,14 +62,14 @@ export const Counter = memo(({ className }: CounterProps) => {
                 onBlur={handleInputBlur}
                 readOnly={!isInputActive}
                 autoComplete="new-password"
-                onChange={handleInputChange}
+                onChange={onChangeInputValue}
                 style={{
                     width: `${width}px`,
                 }}
                 maxLength={3}
             />
 
-            <button onClick={handleIncrement} type="button" className={styles.btn}>
+            <button onClick={onClickIncrement} type="button" className={styles.btn}>
                 <PlusIcon className={styles.icon} />
             </button>
         </div>

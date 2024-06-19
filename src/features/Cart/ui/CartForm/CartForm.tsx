@@ -1,5 +1,8 @@
+/* eslint-disable ulbi-tv-plugin/layer-imports */
 /* eslint-disable react/no-array-index-key */
-import { memo, useState } from 'react';
+import {
+    ChangeEvent, memo, useCallback, useState,
+} from 'react';
 
 import { useSelector } from 'react-redux';
 import { classNames } from '@/shared/lib/classNames/classNames';
@@ -12,8 +15,14 @@ import { Text, TextBold, TextSize } from '@/shared/ui/Text/Text';
 import { getEnding } from '@/shared/utils/getEndings';
 import { Counter } from '@/shared/ui/Counter/Counter';
 import { useAppDispatch } from '@/app/Redux/store';
-import { clearItems } from '@/app/Redux/cart/slice';
+import {
+    addItem, clearItems, minusItem, removeItem,
+    setCount,
+} from '@/app/Redux/cart/slice';
 import { formatNumber } from '@/shared/utils/formatNumber';
+import { CartItem } from '@/app/Redux/cart/types';
+import { LeaveOrderForm } from '../LeaveOrderForm/LeaveOrderForm';
+import { ReactComponent as CloseIcon } from '@/shared/assets/icons/close-icon.svg';
 
 export interface CartFormProps {
   className?: string;
@@ -25,98 +34,148 @@ export const CartForm = memo(({ className, onSuccess }: CartFormProps) => {
 
     const dispatch = useAppDispatch();
 
-    const { items, totalPrice } = useSelector(selectCart);
+    const { items, totalPrice, isOrderModel } = useSelector(selectCart);
 
     const handleChange = () => {
         setChecked(!checked);
     };
 
-    const onCliclClearAll = () => {
+    const onClickClearAll = () => {
         dispatch(clearItems());
         onSuccess();
     };
 
+    const onClickRemoveItem = (item: CartItem) => {
+        dispatch(removeItem(item));
+    };
+
+    const handleInputChange = useCallback(
+        (number: string, item: CartItem) => {
+            const newCount = Number(number);
+            if (newCount === 0) {
+                dispatch(setCount({ count: 1, item }));
+            } else if (!Number.isNaN(newCount)) {
+                dispatch(setCount({ count: newCount, item }));
+            }
+        },
+        [dispatch],
+    );
+
+    const onClickPlusItem = useCallback((item: CartItem) => {
+        dispatch(addItem(item));
+    }, [dispatch]);
+
+    const onClickMinusItem = useCallback((item: CartItem) => {
+        dispatch(minusItem(item));
+    }, [dispatch]);
+
+    if (isOrderModel) {
+        return (
+            <LeaveOrderForm onSuccess={onSuccess} />
+        );
+    }
+
     if (items.length === 0) {
         return (
-            <HStack max justify="center" align="center" className={styles.cartEmpty}>
+            <div className={styles.cartEmpty}>
+                <Button onClick={onSuccess} theme={ThemeButton.CLEAR} className={styles.closeBtnEmpty}>
+                    <CloseIcon className={styles.closeIcon} />
+                </Button>
 
                 <Text gap="0" text="Корзина пуста" />
 
-            </HStack>
+            </div>
         );
     }
 
     return (
-        <div className={classNames(styles.CartForm, {}, [className])}>
-            <div className={styles.top}>
-                <div className={styles.header}>
-                    <Text gap="0" title={`${items.length} ${getEnding(items.length, 'productEndingsDict')}`} />
-                    <Button onClick={onCliclClearAll} theme={ThemeButton.CLEAR_COMMENT}>
-                        <Text gap="0" text="Удалить всё" bold={TextBold.BOLD} size={TextSize.L} />
-                    </Button>
+        <VStack max align="start" justify="between" className={classNames(styles.CartForm, {}, [className])}>
+            <HStack max justify="end">
+                <Button onClick={onSuccess} theme={ThemeButton.CLEAR} className={styles.closeBtn}>
+                    <CloseIcon className={styles.closeIcon} />
+                </Button>
+            </HStack>
 
-                </div>
+            <HStack max justify="between" className={styles.header}>
+                <Text gap="0" title={`${items.length} ${getEnding(items.length, 'productEndingsDict')}`} />
+                <Button onClick={onClickClearAll} theme={ThemeButton.CLEAR_COMMENT}>
+                    <Text gap="0" text="Удалить всё" bold={TextBold.BOLD} size={TextSize.L} />
+                </Button>
 
-                <div className={styles.container}>
-                    {
-                        items.map((item, index) => (
-                            <div key={index} className={styles.box}>
-                                <div className={styles.imageContainer}>
-                                    <img
-                                        src={`https://testguru.ru/parser/${item.image}`}
-                                        className={styles.image}
-                                        alt={item.title}
-                                        height="100%"
-                                        width="100%"
-                                        draggable={false}
+            </HStack>
+
+            <VStack max align="start" className={styles.container}>
+                {
+                    items.map((item, index) => (
+                        <HStack align="start" max key={index} className={styles.box}>
+                            <div className={styles.imageContainer}>
+                                <img
+                                    src={`https://testguru.ru/parser/${item.image}`}
+                                    className={styles.image}
+                                    alt={item.title}
+                                    height="100%"
+                                    width="100%"
+                                    draggable={false}
+                                />
+                            </div>
+
+                            <VStack max gap="8" justify="between" align="start" className={styles.content}>
+                                <HStack max justify="between" align="start">
+                                    <VStack align="start" gap="0">
+                                        <Text
+                                            gap="0"
+                                            title={`${formatNumber(item.price)} ₽`}
+                                            size={TextSize.M}
+                                            bold={TextBold.BOLD}
+                                        />
+                                        <Text gap="0" text={item.vendor_code} bold={TextBold.MEDIUM} />
+                                    </VStack>
+
+                                    <Button
+                                        onClick={() => onClickRemoveItem(item)}
+                                        theme={ThemeButton.CLEAR_COMMENT}
+                                    >
+                                        <Text gap="0" text="Удалить товар" bold={TextBold.MEDIUM} />
+                                    </Button>
+                                </HStack>
+
+                                <div className={styles.titleContainer}>
+                                    <Text
+                                        gap="0"
+                                        title={`${item.title}`}
+                                        size={TextSize.M}
+                                        bold={TextBold.LIGHT}
                                     />
                                 </div>
 
-                                <VStack gap="8" max justify="between" align="start" className={styles.content}>
-                                    <HStack max justify="between" align="start">
-                                        <VStack align="start" gap="0">
-                                            <Text
-                                                gap="0"
-                                                title={`${formatNumber(item.price)} ₽`}
-                                                size={TextSize.M}
-                                                bold={TextBold.BOLD}
-                                            />
-                                            <Text gap="0" text={item.vendor_code} bold={TextBold.MEDIUM} />
-                                        </VStack>
+                                <Counter
+                                    count={item.count}
+                                    onChangeInputValue={
+                                        (event: ChangeEvent<HTMLInputElement>) => handleInputChange(
+                                            event?.currentTarget.value,
+                                            item,
+                                        )
+                                    }
+                                    onClickIncrement={() => onClickPlusItem(item)}
+                                    onClickDecrement={() => onClickMinusItem(item)}
+                                />
 
-                                        <Button theme={ThemeButton.CLEAR_COMMENT}>
-                                            <Text gap="0" text="Удалить товар" bold={TextBold.MEDIUM} />
-                                        </Button>
-                                    </HStack>
+                            </VStack>
 
-                                    <div className={styles.titleContainer}>
-                                        <Text
-                                            gap="0"
-                                            title={`${item.title}`}
-                                            size={TextSize.S}
-                                            bold={TextBold.MEDIUM}
-                                        />
-                                    </div>
+                        </HStack>
+                    ))
+                }
 
-                                    <Counter />
+            </VStack>
 
-                                </VStack>
+            <Checkbox
+                label="Я подтверждаю, что ознакомлен с условиями оферты"
+                checked={checked}
+                id="cartCheck"
+                onToggle={handleChange}
+            />
 
-                            </div>
-                        ))
-                    }
-
-                </div>
-
-                <Checkbox
-                    label="Я подтверждаю, что ознакомлен с условиями оферты"
-                    checked={checked}
-                    id="cartCheck"
-                    onToggle={handleChange}
-                />
-            </div>
-
-            <Button theme={ThemeButton.DEFAULT_BETWEEN}>
+            <Button onClick={onClickClearAll} disabled={!checked} theme={ThemeButton.DEFAULT_BETWEEN}>
                 <Text gap="0" isActive title="Оформить" size={TextSize.S} bold={TextBold.LIGHT} />
                 <Text
                     gap="0"
@@ -127,6 +186,6 @@ export const CartForm = memo(({ className, onSuccess }: CartFormProps) => {
                 />
             </Button>
 
-        </div>
+        </VStack>
     );
 });

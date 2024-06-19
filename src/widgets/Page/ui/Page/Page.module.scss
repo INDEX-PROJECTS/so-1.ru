@@ -2,4 +2,16 @@
     position: relative;
     width: 100%;
     flex-grow: 1;
+
+    @media screen and (max-width: 768px) {
+        padding: 110px 15px 15px;
+        height: 100%;
+    }
+}
+
+.up {
+    position: absolute;
+    bottom: 0;
+    z-index: 5;
+    right: 0;
 }

@@ -7,8 +7,13 @@ export const getCartFromLS = () => {
     const items = data ? JSON.parse(data) : [];
     const totalPrice = calcTotalPrice(items);
 
+    const isCartModelOpen = false;
+    const isOrderModel = false;
+
     return {
         items: items as CartItem[],
         totalPrice,
+        isCartModelOpen,
+        isOrderModel,
     };
 };

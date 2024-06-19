@@ -6,6 +6,11 @@ html,
 body {
     height: 100%;
     background-color: var(--bg-primary);
+    scroll-behavior: smooth;
+
+    @media screen and (max-width: 768px) {
+        overflow-x: hidden;
+    }
 }
 
 body {
@@ -28,6 +33,10 @@ body {
     &:hover {
         transition: color var(--transition-default);
         color: var(--text-primary-hover);
+    }
+
+    @media screen and (max-width: 900px) {
+        font-size: 16px;
     }
 }
 
@@ -62,6 +71,23 @@ body {
 
 *::-webkit-scrollbar {
     display: none;
+}
+
+@media screen and (max-width: 768px) {
+    *::-webkit-scrollbar {
+        display: block;
+        width: 5px;
+        height: 8px;
+    }
+
+    *::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background: black;
+    }
 }
 
 .slide-animation-enter {

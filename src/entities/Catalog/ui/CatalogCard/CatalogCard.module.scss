@@ -1,50 +1,49 @@
 .CatalogCard {
     position: relative;
-    height: 352px;
+    width: 100%;
 }
 
 .card {
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 24px;
+    width: 100%;
+    height: 100%;
+    display: flex;
     padding: 8px;
-    width: 234px;
+
+    &:hover {
+        transition: all 0.2s ease-in-out;
+        transform: scale(1.05);
+        border-radius: 8px;
+        box-shadow: -1px 1px 4px 0 rgb(0 0 0 / 25%);
+    }
 }
 
 .cardImageContainer {
     width: 100%;
-    height: 262px;
-    margin-bottom: 16px;
-}
-
-.cardImage {
-    height: 100%;
-    width: 100%;
-}
-
-.details {
-    position: absolute;
-    right: -266px;
-    height: 100%;
-    width: 246px;
-    z-index: var(--z-index-card-popup);
-    background-color: var(--bg-primary);
-    padding: 8px;
-}
-
-.btn {
-    width: 100%;
-    border-radius: 10px;
-    padding: 16px 0;
-}
-
-.content {
-    overflow: scroll;
+    height: auto;
 }
 
 .titleContainer {
     width: 100%;
-    white-space: nowrap; /* запрещаем перенос текста на новую строку */
-    overflow: hidden; /* скрываем текст, выходящий за границы контейнера */
-    text-overflow: ellipsis; /* добавляем многоточие */
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.content {
+    overflow-y: scroll;
+}
+
+.details {
+    padding: 8px;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: -1px 1px 4px 0 rgb(0 0 0 / 25%);
+    z-index: 6;
+}
+
+.btn {
+    width: 100%;
 }

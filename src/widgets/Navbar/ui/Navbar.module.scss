@@ -8,6 +8,10 @@
     justify-content: space-between;
     padding: 40px;
     z-index: var(--z-index-navbar);
+
+    @media screen and (max-width: 768px) {
+        padding: 20px;
+    }
 }
 
 .nav {
@@ -15,7 +19,17 @@
     align-items: center;
     justify-content: start;
     gap: 24px;
+    transform: translateX(-50px);
     padding: 20px 0;
+    opacity: 0;
+
+    @media screen and (max-width: 900px) {
+        gap: 10px;
+    }
+
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 }
 
 .menuContainer {
@@ -26,6 +40,18 @@
     padding: 16px 24px;
     background-color: var(--bg-black);
     border-radius: 80px;
+    transform: translateX(50px);
+    opacity: 0;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    @media screen and (max-width: 350px) {
+        gap: 20px;
+        padding: 12px 20px;
+    }
 }
 
 .icon {
@@ -48,5 +74,13 @@
             transition: color var(--transition-default);
             color: var(--color-white-active);
         }
+    }
+}
+
+.mobileItem {
+    display: none !important;
+
+    @media screen and (max-width: 768px) {
+        display: block !important;
     }
 }

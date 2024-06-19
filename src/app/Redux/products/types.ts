@@ -15,5 +15,5 @@ export enum Status {
 
 export interface IProductsSliceState {
   status: Status;
-  products: IProduct[][];
+  products: IProduct[];
 }

@@ -1,15 +1,6 @@
 .CartForm {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     height: 100%;
-    gap: 32px;
-}
-
-.top {
-    display: flex;
-    flex-direction: column;
     gap: 32px;
 }
 
@@ -32,16 +23,55 @@
     height: 162px;
     width: 162px;
     flex: none;
+
+    @media screen and (max-width: 768px) {
+        height: 80px;
+        width: 80px;
+    }
 }
 
 .container {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    height: 70%;
+    overflow-y: scroll;
 }
 
 .cartEmpty {
+    width: 100%;
     height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.closeIcon {
+    height: 25px;
+    width: 25px;
+    flex: none;
+    color: var(--text-primary);
+}
+
+.closeBtnEmpty {
+    position: absolute !important;
+    top: 0;
+    right: 0;
+}
+
+.closeBtn {
+    &:hover {
+        .closeIcon {
+            color: var(--text-primary-hover);
+        }
+    }
+
+    &:active {
+        .closeIcon {
+            color: var(--text-primary-active);
+        }
+    }
 }
 
 .content {

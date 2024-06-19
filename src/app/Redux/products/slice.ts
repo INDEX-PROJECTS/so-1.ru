@@ -7,11 +7,11 @@ const initialState: IProductsSliceState = {
     status: Status.LOADING, // loading, success, error
 };
 
-const pizzaSlice = createSlice({
-    name: 'pizza',
+const productSlice = createSlice({
+    name: 'product',
     initialState,
     reducers: {
-        setItems(state, action: PayloadAction<IProduct[][]>) {
+        setItems(state, action: PayloadAction<IProduct[]>) {
             state.products = action.payload;
         },
     },
@@ -21,9 +21,7 @@ const pizzaSlice = createSlice({
             state.products = [];
         });
         builder.addCase(fetchProducts.fulfilled, (state, action: PayloadAction<IProduct[]>) => {
-            for (let i = 0; i < action.payload.length; i += 12) {
-                state.products.push(action.payload.slice(i, i + 12));
-            }
+            state.products = action.payload;
             state.status = Status.SUCCESS;
         });
         builder.addCase(fetchProducts.rejected, (state) => {
@@ -33,6 +31,6 @@ const pizzaSlice = createSlice({
     },
 });
 
-export const { setItems } = pizzaSlice.actions;
+export const { setItems } = productSlice.actions;
 
-export default pizzaSlice.reducer;
+export default productSlice.reducer;

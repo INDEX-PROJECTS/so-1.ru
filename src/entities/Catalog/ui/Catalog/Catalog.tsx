@@ -1,9 +1,9 @@
 /* eslint-disable ulbi-tv-plugin/layer-imports */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { memo, useCallback, useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
+import {
+    memo, useCallback, useEffect, useState,
+} from 'react';
 import { useSelector } from 'react-redux';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import styles from './Catalog.module.scss';
@@ -16,7 +16,8 @@ import { Skeleton } from '@/shared/ui/Skeleton/Skeleton';
 import { VStack } from '@/shared/ui/Stack';
 import { CatalogCard } from '../CatalogCard/CatalogCard';
 import { CartItem } from '@/app/Redux/cart/types';
-import { addItem } from '@/app/Redux/cart/slice';
+import { addItem, setIsCartModel } from '@/app/Redux/cart/slice';
+import { Button } from '@/shared/ui/Button/Button';
 
 interface CatalogProps {
   className?: string;
@@ -24,6 +25,11 @@ interface CatalogProps {
 
 export const Catalog = memo(({ className }: CatalogProps) => {
     const dispatch = useAppDispatch();
+    const [openedCardIndex, setOpenedCardIndex] = useState<number | null>(null);
+
+    const handleCardDescriptionClick = (index: number) => {
+        setOpenedCardIndex(index === openedCardIndex ? null : index);
+    };
     const { products, status } = useSelector(selectProductData);
 
     const getProducts = async () => {
@@ -34,12 +40,23 @@ export const Catalog = memo(({ className }: CatalogProps) => {
         getProducts();
     }, []);
 
+    function hasNumbers(value: string) {
+        return /\d/.test(value);
+    }
+
     const onClickAddToCart = useCallback((product: IProduct) => {
-        const item: CartItem = {
-            ...product,
-            count: 0,
-        };
-        dispatch(addItem(item));
+        if (hasNumbers(product.price)) {
+            const item: CartItem = {
+                ...product,
+                count: 0,
+            };
+            dispatch(addItem(item));
+        } else {
+            dispatch(setIsCartModel({
+                isCartModelOpen: true,
+                isOrderModel: true,
+            }));
+        }
     }, []);
 
     return (
@@ -48,52 +65,37 @@ export const Catalog = memo(({ className }: CatalogProps) => {
             <div className={styles.container}>
                 <Text gap="32" title="Каталог" size={TextSize.XL} className="title" />
 
-                <Swiper
-                    direction="vertical"
-                    pagination={{
-                        clickable: true,
-                    }}
-                    modules={[Pagination]}
-                    className="mySwiper"
-                >
+                <div className={styles.cardContainer}>
                     {
                         status === Status.LOADING ? (
-                            <SwiperSlide>
-                                {
-                                    [...Array(10)].map((_, index) => (
-                                        <div key={index} className={styles.card}>
+                            [...Array(10)].map((_, index) => (
+                                <div key={index} className={styles.card}>
 
-                                            <div className={styles.cardImageContainer}>
-                                                <Skeleton width="100%" height="100%" border="20px" />
-                                            </div>
+                                    <div className={styles.cardImageContainer}>
+                                        <Skeleton width="100%" height="100%" border="20px" />
+                                    </div>
 
-                                            <VStack max gap="4">
-                                                <Skeleton width="100%" height="40px" border="20px" />
+                                    <VStack max gap="4">
+                                        <Skeleton width="100%" height="40px" border="20px" />
 
-                                                <Skeleton width="100%" height="20px" border="20px" />
-                                            </VStack>
+                                        <Skeleton width="100%" height="20px" border="20px" />
+                                    </VStack>
 
-                                        </div>
-                                    ))
-                                }
+                                </div>
+                            ))
+                        ) : products.map((product, index) => (
+                            <Button key={index} onClick={() => handleCardDescriptionClick(index)}>
+                                <CatalogCard
+                                    onClickAddToCart={onClickAddToCart}
+                                    product={product}
+                                    index={index}
+                                    openedCardIndex={openedCardIndex}
+                                />
+                            </Button>
 
-                            </SwiperSlide>
-                        ) : products.map((chunk, index) => (
-                            <SwiperSlide key={index}>
-                                {
-                                    chunk.map((product, index) => (
-                                        <CatalogCard
-                                            onClickAddToCart={onClickAddToCart}
-                                            product={product}
-                                            key={index}
-                                        />
-                                    ))
-                                }
-                            </SwiperSlide>
                         ))
                     }
-
-                </Swiper>
+                </div>
 
             </div>
 

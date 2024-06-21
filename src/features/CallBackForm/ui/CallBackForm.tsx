@@ -12,38 +12,34 @@ interface CallBackFormProps {
   className?: string;
 }
 
-export const CallBackForm = memo(({ className }: CallBackFormProps) => {
-    const t = {};
-
-    return (
-        <div id="callBackSection" className={classNames(styles.CallBackForm, {}, [className])}>
-            <div className={styles.container}>
-                <VStack gap="32" align="start" className={styles.form}>
-                    <Text
-                        gap="0"
-                        text="Для получения
+export const CallBackForm = memo(({ className }: CallBackFormProps) => (
+    <div id="callBackSection" className={classNames(styles.CallBackForm, {}, [className])}>
+        <div className={styles.container}>
+            <VStack gap="32" align="start" className={styles.form}>
+                <Text
+                    gap="0"
+                    text="Для получения
                          консультации по наличию
                           товара и срока поступления на склад оставьте свой номер"
-                        textPrimary
-                        bold={TextBold.BOLD}
-                        size={TextSize.XL}
-                    />
+                    textPrimary
+                    bold={TextBold.BOLD}
+                    size={TextSize.XL}
+                />
 
-                    <VStack max>
-                        <Input placeholder="Телефон *" />
-                        <Input placeholder="Тема запроса" />
-                    </VStack>
-
-                    <Button theme={ThemeButton.SVG_CLEAR}>
-                        <ArrowIcon className={styles.arrowIcon} />
-                    </Button>
-
-                    <div className={styles.circleContainer} />
-
-                    <CircleLink title="Обратная связь" isLink={false} className={styles.formCircle} id="call-back" />
+                <VStack max>
+                    <Input placeholder="Телефон *" />
+                    <Input placeholder="Тема запроса" />
                 </VStack>
-            </div>
 
+                <Button theme={ThemeButton.SVG_CLEAR}>
+                    <ArrowIcon className={styles.arrowIcon} />
+                </Button>
+
+                <div className={styles.circleContainer} />
+
+                <CircleLink title="Обратная связь" isLink={false} className={styles.formCircle} id="call-back" />
+            </VStack>
         </div>
-    );
-});
+
+    </div>
+));

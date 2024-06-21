@@ -20,14 +20,6 @@ interface TestScrollProps {
 export const TestScroll = memo(({ className }: TestScrollProps) => {
     const [isMobile, setIsMobile] = useState(false);
     const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
-    const [isUpVisible, setIsUpVisible] = useState(false);
-
-    const onClickScrollTop = () => {
-        wrapperRef.current.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-        });
-    };
 
     useEffect(() => {
         const handleResize = () => {

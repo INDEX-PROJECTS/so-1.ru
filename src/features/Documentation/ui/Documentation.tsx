@@ -12,11 +12,14 @@ interface DocumentationProps {
 export const Documentation = memo(({ className }: DocumentationProps) => {
     const t = {};
     return (
-        <div id="documentations" className={classNames(styles.Documentation, {}, [className])}>
+        <div
+            id="documentationSection"
+            className={classNames(styles.Documentation, {}, [className])}
+        >
 
             <Text gap="32" title="Документация" size={TextSize.XL} className="title" />
 
-            <HStack max gap="50" className={styles.container}>
+            <HStack max gap="32" justify="between" className={styles.container}>
                 <VStack align="start" gap="32" className={styles.box}>
                     <Text gap="0" title="Оферта" size={TextSize.XL} />
 

@@ -1,17 +1,42 @@
-.Page {
-    position: relative;
-    width: 100%;
-    flex-grow: 1;
+// .Page {
+//     position: relative;
+//     width: 100%;
+//     flex-grow: 1;
 
-    @media screen and (max-width: 768px) {
-        padding: 110px 15px 15px;
-        height: 100%;
+//     @media screen and (min-width: 768px) {
+//         height: 100vh;
+//     }
+
+//     @media screen and (max-width: 768px) {
+//         padding: 110px 15px 15px;
+//         height: 100%;
+//     }
+// }
+
+.Page {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    /*  note vh and vw switched  */
+    width: 100vh;
+    height: 100vw;
+    transform-origin: top left;
+    transform: rotate(-90deg) translateX(-100vh);
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    @media (max-width: 768px) {
+        position: relative;
+        transform: rotate(0) translateX(0);
+        width: 100vw;
+        height: 100vh;
     }
 }
 
 .up {
-    position: absolute;
-    bottom: 0;
+    position: sticky;
+    bottom: 20px;
     z-index: 5;
-    right: 0;
+    left: 20px;
 }

@@ -1,4 +1,6 @@
-import { memo, ReactElement } from 'react';
+import {
+    memo, ReactElement,
+} from 'react';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import styles from './MainLayout.module.scss';
 

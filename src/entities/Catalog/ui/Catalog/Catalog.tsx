@@ -60,7 +60,7 @@ export const Catalog = memo(({ className }: CatalogProps) => {
     }, []);
 
     return (
-        <div id="catalog" className={classNames(styles.Catalog, {}, [className])}>
+        <div id="catalogSection" className={classNames(styles.Catalog, {}, [className])}>
 
             <div className={styles.container}>
                 <Text gap="32" title="Каталог" size={TextSize.XL} className="title" />

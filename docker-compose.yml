@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  so-1:
+    image: so-1
+    container_name: so-1
+    stdin_open: true
+    tty: true
+    restart: always
+    ports:
+      - "4001:3000"
+    build:
+      context: .
+      dockerfile: Dockerfile

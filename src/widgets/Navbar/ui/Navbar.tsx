@@ -54,14 +54,14 @@ export const Navbar = memo(({ className }: NavbarProps) => {
             className={classNames(styles.header, {}, [className])}
         >
             <nav id="navigation" className={styles.nav}>
-                <a className="link" href="#catalog">Каталог</a>
-                <a className="link" href="#">Оферта</a>
-                <a className="link" href="#">Персональные данные</a>
-                <a className="link" href="#">Покупателям</a>
+                <a className="link" href="#catalogSection">Каталог</a>
+                <a className="link" href="#documentationSection">Оферта</a>
+                <a className="link" href="#documentationSection">Персональные данные</a>
+                <a className="link" href="#documentationSection">Покупателям</a>
             </nav>
 
             <div id="menu" className={styles.menuContainer}>
-                <a href="#documentations" className={classNames(styles.item, {}, [styles.mobileItem])}>
+                <a href="#documentationSection" className={classNames(styles.item, {}, [styles.mobileItem])}>
                     <DocsIcon className={styles.icon} />
                 </a>
                 <Button theme={ThemeButton.CLEAR} onClick={onShowCartModal} className={styles.item}>
@@ -90,7 +90,7 @@ export const Navbar = memo(({ className }: NavbarProps) => {
                 >
                     <PhoneIcon className={styles.icon} />
                 </Button>
-                <a href="#callBackForm" className={styles.item}>
+                <a href="#callBackSection" className={styles.item}>
                     <MessagesIcon className={styles.icon} />
                 </a>
             </div>

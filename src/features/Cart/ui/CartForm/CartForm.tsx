@@ -5,6 +5,7 @@ import {
 } from 'react';
 
 import { useSelector } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import styles from './CartForm.module.scss';
 import { Checkbox } from '@/shared/ui/Checkbox/Checkbox';
@@ -31,6 +32,9 @@ export interface CartFormProps {
 
 export const CartForm = memo(({ className, onSuccess }: CartFormProps) => {
     const [checked, setChecked] = useState(false);
+    const [currentStep, setCurrentStep] = useState(0);
+
+    const [slideIn, setSlideIn] = useState(true);
 
     const dispatch = useAppDispatch();
 
@@ -45,6 +49,10 @@ export const CartForm = memo(({ className, onSuccess }: CartFormProps) => {
         onSuccess();
     };
 
+    const handleClearItems = () => {
+        dispatch(clearItems());
+    };
+
     const onClickRemoveItem = (item: CartItem) => {
         dispatch(removeItem(item));
     };
@@ -52,9 +60,7 @@ export const CartForm = memo(({ className, onSuccess }: CartFormProps) => {
     const handleInputChange = useCallback(
         (number: string, item: CartItem) => {
             const newCount = Number(number);
-            if (newCount === 0) {
-                dispatch(setCount({ count: 1, item }));
-            } else if (!Number.isNaN(newCount)) {
+            if (!Number.isNaN(newCount)) {
                 dispatch(setCount({ count: newCount, item }));
             }
         },
@@ -68,6 +74,241 @@ export const CartForm = memo(({ className, onSuccess }: CartFormProps) => {
     const onClickMinusItem = useCallback((item: CartItem) => {
         dispatch(minusItem(item));
     }, [dispatch]);
+
+    const handleFormSubmit = () => {
+        setSlideIn(false);
+
+        setTimeout(() => {
+            setCurrentStep(1);
+            setSlideIn(true);
+        }, 300);
+    };
+
+    const onClickBack = () => {
+        setSlideIn(false);
+
+        setTimeout(() => {
+            setCurrentStep(0);
+            setSlideIn(true);
+        }, 300);
+    };
+
+    const renderCartForm = (currentStep: number) => {
+        switch (currentStep) {
+        case 0:
+            return (
+                <VStack max align="start" justify="between" className={classNames(styles.CartForm, {}, [className])}>
+                    <HStack max justify="end">
+                        <Button onClick={onSuccess} theme={ThemeButton.CLEAR} className={styles.closeBtn}>
+                            <CloseIcon className={styles.closeIcon} />
+                        </Button>
+                    </HStack>
+
+                    <HStack max justify="between" className={styles.header}>
+                        <Text gap="0" title={`${items.length} ${getEnding(items.length, 'productEndingsDict')}`} />
+                        <Button onClick={onClickClearAll} theme={ThemeButton.CLEAR_COMMENT}>
+                            <Text gap="0" text="Удалить всё" bold={TextBold.BOLD} size={TextSize.L} />
+                        </Button>
+
+                    </HStack>
+
+                    <VStack max align="start" className={styles.container}>
+                        {
+                            items.map((item, index) => (
+                                <HStack align="start" max key={index} className={styles.box}>
+                                    <div className={styles.imageContainer}>
+                                        <img
+                                            src={`https://testguru.ru/parser/${item.image}`}
+                                            className={styles.image}
+                                            alt={item.title}
+                                            height="100%"
+                                            width="100%"
+                                            draggable={false}
+                                        />
+                                    </div>
+
+                                    <VStack max gap="8" justify="between" align="start" className={styles.content}>
+                                        <HStack max justify="between" align="start">
+                                            <VStack align="start" gap="0">
+                                                <Text
+                                                    gap="0"
+                                                    title={`${formatNumber(item.price)} ₽`}
+                                                    size={TextSize.M}
+                                                    bold={TextBold.BOLD}
+                                                />
+                                                <Text gap="0" text={item.vendor_code} bold={TextBold.MEDIUM} />
+                                            </VStack>
+
+                                            <Button
+                                                onClick={() => onClickRemoveItem(item)}
+                                                theme={ThemeButton.CLEAR_COMMENT}
+                                            >
+                                                <Text gap="0" text="Удалить товар" bold={TextBold.MEDIUM} />
+                                            </Button>
+                                        </HStack>
+
+                                        <div className={styles.titleContainer}>
+                                            <Text
+                                                gap="0"
+                                                title={`${item.title}`}
+                                                size={TextSize.M}
+                                                bold={TextBold.LIGHT}
+                                            />
+                                        </div>
+
+                                        <Counter
+                                            count={item.count}
+                                            onChangeInputValue={
+                                                (event: ChangeEvent<HTMLInputElement>) => handleInputChange(
+                                                    event?.currentTarget.value,
+                                                    item,
+                                                )
+                                            }
+                                            onClickIncrement={() => onClickPlusItem(item)}
+                                            onClickDecrement={() => onClickMinusItem(item)}
+                                        />
+
+                                    </VStack>
+
+                                </HStack>
+                            ))
+                        }
+
+                    </VStack>
+
+                    <Checkbox
+                        label="Я подтверждаю, что ознакомлен с условиями оферты"
+                        checked={checked}
+                        id="cartCheck"
+                        onToggle={handleChange}
+                    />
+
+                    <Button onClick={handleFormSubmit} disabled={!checked} theme={ThemeButton.DEFAULT_BETWEEN}>
+                        <Text gap="0" isActive title="Оформить" size={TextSize.S} bold={TextBold.LIGHT} />
+                        <Text
+                            gap="0"
+                            isActive
+                            title={`${formatNumber(totalPrice)} ₽`}
+                            size={TextSize.M}
+                            bold={TextBold.MEDIUM}
+                        />
+                    </Button>
+
+                </VStack>
+            );
+        case 1:
+            return (
+                <LeaveOrderForm
+                    isBack
+                    onClickBack={onClickBack}
+                    onClearCart={handleClearItems}
+                    onSuccess={onSuccess}
+                />
+            );
+
+        default:
+            return (
+                <VStack max align="start" justify="between" className={classNames(styles.CartForm, {}, [className])}>
+                    <HStack max justify="end">
+                        <Button onClick={onSuccess} theme={ThemeButton.CLEAR} className={styles.closeBtn}>
+                            <CloseIcon className={styles.closeIcon} />
+                        </Button>
+                    </HStack>
+
+                    <HStack max justify="between" className={styles.header}>
+                        <Text gap="0" title={`${items.length} ${getEnding(items.length, 'productEndingsDict')}`} />
+                        <Button onClick={onClickClearAll} theme={ThemeButton.CLEAR_COMMENT}>
+                            <Text gap="0" text="Удалить всё" bold={TextBold.BOLD} size={TextSize.L} />
+                        </Button>
+
+                    </HStack>
+
+                    <VStack max align="start" className={styles.container}>
+                        {
+                            items.map((item, index) => (
+                                <HStack align="start" max key={index} className={styles.box}>
+                                    <div className={styles.imageContainer}>
+                                        <img
+                                            src={`https://testguru.ru/parser/${item.image}`}
+                                            className={styles.image}
+                                            alt={item.title}
+                                            height="100%"
+                                            width="100%"
+                                            draggable={false}
+                                        />
+                                    </div>
+
+                                    <VStack max gap="8" justify="between" align="start" className={styles.content}>
+                                        <HStack max justify="between" align="start">
+                                            <VStack align="start" gap="0">
+                                                <Text
+                                                    gap="0"
+                                                    title={`${formatNumber(item.price)} ₽`}
+                                                    size={TextSize.M}
+                                                    bold={TextBold.BOLD}
+                                                />
+                                                <Text gap="0" text={item.vendor_code} bold={TextBold.MEDIUM} />
+                                            </VStack>
+
+                                            <Button
+                                                onClick={() => onClickRemoveItem(item)}
+                                                theme={ThemeButton.CLEAR_COMMENT}
+                                            >
+                                                <Text gap="0" text="Удалить товар" bold={TextBold.MEDIUM} />
+                                            </Button>
+                                        </HStack>
+
+                                        <div className={styles.titleContainer}>
+                                            <Text
+                                                gap="0"
+                                                title={`${item.title}`}
+                                                size={TextSize.M}
+                                                bold={TextBold.LIGHT}
+                                            />
+                                        </div>
+
+                                        <Counter
+                                            count={item.count}
+                                            onChangeInputValue={
+                                                (event: ChangeEvent<HTMLInputElement>) => handleInputChange(
+                                                    event?.currentTarget.value,
+                                                    item,
+                                                )
+                                            }
+                                            onClickIncrement={() => onClickPlusItem(item)}
+                                            onClickDecrement={() => onClickMinusItem(item)}
+                                        />
+
+                                    </VStack>
+
+                                </HStack>
+                            ))
+                        }
+
+                    </VStack>
+
+                    <Checkbox
+                        label="Я подтверждаю, что ознакомлен с условиями оферты"
+                        checked={checked}
+                        id="cartCheck"
+                        onToggle={handleChange}
+                    />
+
+                    <Button onClick={handleFormSubmit} disabled={!checked} theme={ThemeButton.DEFAULT_BETWEEN}>
+                        <Text gap="0" isActive title="Оформить" size={TextSize.S} bold={TextBold.LIGHT} />
+                        <Text
+                            gap="0"
+                            isActive
+                            title={`${formatNumber(totalPrice)} ₽`}
+                            size={TextSize.M}
+                            bold={TextBold.MEDIUM}
+                        />
+                    </Button>
+
+                </VStack>
+            );
+        }
+    };
 
     if (isOrderModel) {
         return (
@@ -89,103 +330,15 @@ export const CartForm = memo(({ className, onSuccess }: CartFormProps) => {
     }
 
     return (
-        <VStack max align="start" justify="between" className={classNames(styles.CartForm, {}, [className])}>
-            <HStack max justify="end">
-                <Button onClick={onSuccess} theme={ThemeButton.CLEAR} className={styles.closeBtn}>
-                    <CloseIcon className={styles.closeIcon} />
-                </Button>
-            </HStack>
-
-            <HStack max justify="between" className={styles.header}>
-                <Text gap="0" title={`${items.length} ${getEnding(items.length, 'productEndingsDict')}`} />
-                <Button onClick={onClickClearAll} theme={ThemeButton.CLEAR_COMMENT}>
-                    <Text gap="0" text="Удалить всё" bold={TextBold.BOLD} size={TextSize.L} />
-                </Button>
-
-            </HStack>
-
-            <VStack max align="start" className={styles.container}>
-                {
-                    items.map((item, index) => (
-                        <HStack align="start" max key={index} className={styles.box}>
-                            <div className={styles.imageContainer}>
-                                <img
-                                    src={`https://testguru.ru/parser/${item.image}`}
-                                    className={styles.image}
-                                    alt={item.title}
-                                    height="100%"
-                                    width="100%"
-                                    draggable={false}
-                                />
-                            </div>
-
-                            <VStack max gap="8" justify="between" align="start" className={styles.content}>
-                                <HStack max justify="between" align="start">
-                                    <VStack align="start" gap="0">
-                                        <Text
-                                            gap="0"
-                                            title={`${formatNumber(item.price)} ₽`}
-                                            size={TextSize.M}
-                                            bold={TextBold.BOLD}
-                                        />
-                                        <Text gap="0" text={item.vendor_code} bold={TextBold.MEDIUM} />
-                                    </VStack>
-
-                                    <Button
-                                        onClick={() => onClickRemoveItem(item)}
-                                        theme={ThemeButton.CLEAR_COMMENT}
-                                    >
-                                        <Text gap="0" text="Удалить товар" bold={TextBold.MEDIUM} />
-                                    </Button>
-                                </HStack>
-
-                                <div className={styles.titleContainer}>
-                                    <Text
-                                        gap="0"
-                                        title={`${item.title}`}
-                                        size={TextSize.M}
-                                        bold={TextBold.LIGHT}
-                                    />
-                                </div>
-
-                                <Counter
-                                    count={item.count}
-                                    onChangeInputValue={
-                                        (event: ChangeEvent<HTMLInputElement>) => handleInputChange(
-                                            event?.currentTarget.value,
-                                            item,
-                                        )
-                                    }
-                                    onClickIncrement={() => onClickPlusItem(item)}
-                                    onClickDecrement={() => onClickMinusItem(item)}
-                                />
-
-                            </VStack>
-
-                        </HStack>
-                    ))
-                }
-
-            </VStack>
-
-            <Checkbox
-                label="Я подтверждаю, что ознакомлен с условиями оферты"
-                checked={checked}
-                id="cartCheck"
-                onToggle={handleChange}
-            />
-
-            <Button onClick={onClickClearAll} disabled={!checked} theme={ThemeButton.DEFAULT_BETWEEN}>
-                <Text gap="0" isActive title="Оформить" size={TextSize.S} bold={TextBold.LIGHT} />
-                <Text
-                    gap="0"
-                    isActive
-                    title={`${formatNumber(totalPrice)} ₽`}
-                    size={TextSize.M}
-                    bold={TextBold.MEDIUM}
-                />
-            </Button>
-
-        </VStack>
+        <CSSTransition
+            in={slideIn}
+            timeout={300}
+            unmountOnExit
+            classNames="slide-animation"
+        >
+            {
+                renderCartForm(currentStep)
+            }
+        </CSSTransition>
     );
 });

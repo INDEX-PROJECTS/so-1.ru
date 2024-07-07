@@ -2,9 +2,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import product from './products/slice';
 import cart from './cart/slice';
+import notification from './notifications/slice';
 
 export const store = configureStore({
     reducer: {
+        notification,
         product,
         cart,
     },

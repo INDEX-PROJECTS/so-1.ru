@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 
 import {
-    ChangeEventHandler, memo, useCallback, useEffect, useState,
+    ChangeEventHandler, memo, useCallback, useEffect, useRef, useState,
 } from 'react';
 import styles from './Counter.module.scss';
 import { ReactComponent as MinusIcon } from '@/shared/assets/icons/minus-icon.svg';
@@ -26,6 +26,8 @@ export const Counter = memo((props: CounterProps) => {
 
     const [isInputActive, setIsInputActive] = useState(false);
 
+    const inputRef = useRef<HTMLInputElement | null>(null);
+
     useEffect(() => {
         switch (String(count).length) {
         case 1:
@@ -42,11 +44,15 @@ export const Counter = memo((props: CounterProps) => {
 
     const handleInputClick = useCallback(() => {
         setIsInputActive(true);
+        inputRef.current?.focus();
     }, []);
 
     const handleInputBlur = useCallback(() => {
         setIsInputActive(false);
-    }, []);
+        if (Number(count) === 0) {
+            onClickIncrement();
+        }
+    }, [count, onClickIncrement]);
 
     return (
         <div className={classNames(styles.Counter, {}, [className])}>
@@ -55,13 +61,12 @@ export const Counter = memo((props: CounterProps) => {
             </button>
 
             <input
+                ref={inputRef}
                 type="text"
                 className={styles.input}
                 value={count}
                 onClick={handleInputClick}
                 onBlur={handleInputBlur}
-                readOnly={!isInputActive}
-                autoComplete="new-password"
                 onChange={onChangeInputValue}
                 style={{
                     width: `${width}px`,

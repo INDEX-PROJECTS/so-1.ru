@@ -18,6 +18,7 @@ import { CatalogCard } from '../CatalogCard/CatalogCard';
 import { CartItem } from '@/app/Redux/cart/types';
 import { addItem, setIsCartModel } from '@/app/Redux/cart/slice';
 import { Button } from '@/shared/ui/Button/Button';
+import { addNotification } from '@/app/Redux/notifications/slice';
 
 interface CatalogProps {
   className?: string;
@@ -51,6 +52,9 @@ export const Catalog = memo(({ className }: CatalogProps) => {
                 count: 0,
             };
             dispatch(addItem(item));
+            dispatch(addNotification({
+                text: 'Товар добавлен в корзину',
+            }));
         } else {
             dispatch(setIsCartModel({
                 isCartModelOpen: true,

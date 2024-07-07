@@ -35,8 +35,13 @@
 }
 
 .up {
-    position: sticky;
-    bottom: 20px;
-    z-index: 5;
-    left: 20px;
+    display: none;
+
+    @media (max-width: 768px) {
+        display: block;
+        position: sticky;
+        bottom: 20px;
+        z-index: 100;
+        left: 20px;
+    }
 }

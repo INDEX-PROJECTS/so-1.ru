@@ -1,6 +1,7 @@
 .TestScroll {
     display: flex;
     flex-direction: row;
+    gap: 200px;
     width: fit-content;
     height: fit-content;
     transform-origin: top left;

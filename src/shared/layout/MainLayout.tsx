@@ -1,8 +1,10 @@
+/* eslint-disable ulbi-tv-plugin/layer-imports */
 import {
     memo, ReactElement,
 } from 'react';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import styles from './MainLayout.module.scss';
+import { Notifications } from '@/features/Notifications';
 
 interface MainLayoutProps {
     className?: string;
@@ -20,6 +22,8 @@ export const MainLayout = memo((props: MainLayoutProps) => {
             {header}
 
             {content}
+
+            <Notifications />
 
         </div>
     );

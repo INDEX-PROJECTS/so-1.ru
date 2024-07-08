@@ -11,7 +11,7 @@ interface NotificationsProps {
 export const Notifications = memo(({ className }: NotificationsProps) => {
     const notifications = useSelector(selectNotifications);
     return (
-        <NotificationList>
+        <NotificationList className={className}>
             {notifications.map((notification) => (
                 <NotificationItem key={notification.id} notification={notification} />
             ))}

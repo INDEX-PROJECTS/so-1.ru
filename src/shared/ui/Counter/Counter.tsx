@@ -24,8 +24,6 @@ export const Counter = memo((props: CounterProps) => {
     } = props;
     const [width, setWidth] = useState(10);
 
-    const [isInputActive, setIsInputActive] = useState(false);
-
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {
@@ -43,12 +41,10 @@ export const Counter = memo((props: CounterProps) => {
     }, [count]);
 
     const handleInputClick = useCallback(() => {
-        setIsInputActive(true);
         inputRef.current?.focus();
     }, []);
 
     const handleInputBlur = useCallback(() => {
-        setIsInputActive(false);
         if (Number(count) === 0) {
             onClickIncrement();
         }

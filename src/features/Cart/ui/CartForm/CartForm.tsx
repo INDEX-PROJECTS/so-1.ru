@@ -118,7 +118,7 @@ export const CartForm = memo(({ className, onSuccess }: CartFormProps) => {
                                 <HStack align="start" max key={index} className={styles.box}>
                                     <div className={styles.imageContainer}>
                                         <img
-                                            src={`https://testguru.ru/parser/${item.image}`}
+                                            src={`${import.meta.env.VITE_BASE_URL}/${item.image}`}
                                             className={styles.image}
                                             alt={item.title}
                                             height="100%"
@@ -229,7 +229,7 @@ export const CartForm = memo(({ className, onSuccess }: CartFormProps) => {
                                 <HStack align="start" max key={index} className={styles.box}>
                                     <div className={styles.imageContainer}>
                                         <img
-                                            src={`${import.meta.env.BASE_URL}/${item.image}`}
+                                            src={`${import.meta.env.VITE_BASE_URL}/${item.image}`}
                                             className={styles.image}
                                             alt={item.title}
                                             height="100%"

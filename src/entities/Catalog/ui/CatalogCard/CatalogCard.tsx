@@ -23,7 +23,7 @@ export const CatalogCard = memo(({
         <VStack gap="16" align="start" justify="between" className={styles.card}>
             <div className={styles.cardImageContainer}>
                 <img
-                    src={`https://testguru.ru/parser/${product.image}`}
+                    src={`${import.meta.env.BASE_URL}/${product.image}`}
                     className={styles.cardImage}
                     alt={product.title}
                     height="100%"

@@ -13,12 +13,16 @@
 
 .box {
     border-radius: 40px;
-    width: 30%;
-    max-width: 749px;
+    max-width: 860px;
     min-width: 500px;
     background-color: var(--color-bg-card);
     padding: 40px;
     flex-grow: 1;
+
+    @media screen and (max-width: 1880px) {
+        width: 40%;
+        max-width: 800px;
+    }
 
     @media screen and (min-width: 768px) {
         height: 749px;

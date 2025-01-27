@@ -831,7 +831,7 @@ export const Documentation = memo(({ className }: DocumentationProps) => (
                         display: 'flex', justifyContent: 'center', width: '100%', marginBottom: '8px',
                     }}
                     >
-                        <img src="/paymentCards.png" alt="Пример карты" style={{ width: '100%' }} />
+                        <img src="/paymentCards.png" alt="Пример карты" style={{ width: '100%', maxWidth: '350px' }} />
                     </div>
                 </VStack>
 
@@ -862,8 +862,8 @@ export const Documentation = memo(({ className }: DocumentationProps) => (
                         gap="0"
                         textPrimary
                         bold={TextBold.BOLD}
-                        text="Интернет-магазин — официальный интернет-магазин Продавца, расположенный по адресу https://partmarket.online/. Понятия Интернет-магазин и Сайт являются равносильными и трактуются
-аутентично по контексту ниже."
+                        text={`Интернет-магазин — официальный интернет-магазин Продавца, расположенный по адресу https://${import.meta.env.VITE_DOMEN_NAME}/. Понятия Интернет-магазин и Сайт являются равносильными и трактуются
+аутентично по контексту ниже.`}
                         size={TextSize.L}
                     />
 

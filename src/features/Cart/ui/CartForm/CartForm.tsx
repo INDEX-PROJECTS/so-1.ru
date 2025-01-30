@@ -6,6 +6,7 @@ import {
 
 import { useSelector } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
+import axios from 'axios';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import styles from './CartForm.module.scss';
 import { Checkbox } from '@/shared/ui/Checkbox/Checkbox';
@@ -91,6 +92,22 @@ export const CartForm = memo(({ className, onSuccess }: CartFormProps) => {
             setCurrentStep(0);
             setSlideIn(true);
         }, 300);
+    };
+
+    const paymentYooKassa = async () => {
+        await axios
+            .post(import.meta.env.VITE_PAYMENT_LINK, {
+                amount: totalPrice,
+            })
+            .then((response) => {
+                onSuccess();
+                dispatch(clearItems());
+                window.location.replace(response.data.paymentUrl);
+            })
+            .catch(() => {
+                // eslint-disable-next-line no-alert
+                alert('Что-то пошло не так! Повторите попытку позже.');
+            });
     };
 
     const renderCartForm = (currentStep: number) => {
@@ -183,16 +200,41 @@ export const CartForm = memo(({ className, onSuccess }: CartFormProps) => {
                         onToggle={handleChange}
                     />
 
-                    <Button onClick={handleFormSubmit} disabled={!checked} theme={ThemeButton.DEFAULT_BETWEEN}>
-                        <Text gap="0" isActive title="Оформить" size={TextSize.S} bold={TextBold.LIGHT} />
-                        <Text
-                            gap="0"
-                            isActive
-                            title={`${formatNumber(totalPrice)} ₽`}
-                            size={TextSize.M}
-                            bold={TextBold.MEDIUM}
-                        />
-                    </Button>
+                    {
+                        import.meta.env.VITE_DOMEN_NAME === 'pro-zapchasti.online'
+                            ? (
+                                <Button
+                                    onClick={paymentYooKassa}
+                                    disabled={!checked}
+                                    theme={ThemeButton.DEFAULT_BETWEEN}
+                                >
+                                    <Text gap="0" isActive title="Оплатить" size={TextSize.S} bold={TextBold.LIGHT} />
+                                    <Text
+                                        gap="0"
+                                        isActive
+                                        title={`${formatNumber(totalPrice)} ₽`}
+                                        size={TextSize.M}
+                                        bold={TextBold.MEDIUM}
+                                    />
+                                </Button>
+                            )
+                            : (
+                                <Button
+                                    onClick={handleFormSubmit}
+                                    disabled={!checked}
+                                    theme={ThemeButton.DEFAULT_BETWEEN}
+                                >
+                                    <Text gap="0" isActive title="Оформить" size={TextSize.S} bold={TextBold.LIGHT} />
+                                    <Text
+                                        gap="0"
+                                        isActive
+                                        title={`${formatNumber(totalPrice)} ₽`}
+                                        size={TextSize.M}
+                                        bold={TextBold.MEDIUM}
+                                    />
+                                </Button>
+                            )
+                    }
 
                 </VStack>
             );

@@ -1,6 +1,4 @@
 import { memo, useState } from 'react';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import styles from './LeaveOrderForm.module.scss';
 import { Text, TextBold, TextSize } from '@/shared/ui/Text/Text';
@@ -9,10 +7,10 @@ import { Checkbox } from '@/shared/ui/Checkbox/Checkbox';
 import { Button, ThemeButton } from '@/shared/ui/Button/Button';
 import { Input } from '@/shared/ui/Input/Input';
 import { ReactComponent as CloseIcon } from '@/shared/assets/icons/close-icon.svg';
+// eslint-disable-next-line ulbi-tv-plugin/layer-imports
 import { useAppDispatch } from '@/app/Redux/store';
+// eslint-disable-next-line ulbi-tv-plugin/layer-imports
 import { addNotification } from '@/app/Redux/notifications/slice';
-import { formatNumber } from '@/shared/utils/formatNumber.ts';
-import { selectCart } from '@/app/Redux/cart/selectors.ts';
 
 interface LeaveOrderFormProps {
   className?: string;
@@ -30,8 +28,6 @@ export const LeaveOrderForm = memo(({
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-
-    const { totalPrice } = useSelector(selectCart);
 
     const onChangeName = (value: string) => {
         setName(value);
@@ -60,31 +56,6 @@ export const LeaveOrderForm = memo(({
         if (onClearCart) {
             onClearCart();
         }
-    };
-
-    const paymentYooKassa = async () => {
-        await axios
-            .post(import.meta.env.VITE_PAYMENT_LINK, {
-                amount: totalPrice,
-                email,
-            })
-            .then((response) => {
-                onSuccess();
-                dispatch(addNotification({
-                    text: 'Переадресация...',
-                }));
-                setName('');
-                setEmail('');
-                if (onClearCart) {
-                    onClearCart();
-                }
-                window.location.replace(response.data.paymentUrl);
-            })
-            .catch(() => {
-                dispatch(addNotification({
-                    text: 'Что-то пошло не так! Повторите попытку позже.',
-                }));
-            });
     };
 
     return (
@@ -120,35 +91,14 @@ export const LeaveOrderForm = memo(({
                 />
             </VStack>
 
-            {
-                import.meta.env.VITE_DOMEN_NAME === 'pro-zapchasti.online'
-                    ? (
-                        <Button
-                            onClick={paymentYooKassa}
-                            disabled={!checked}
-                            theme={ThemeButton.DEFAULT_BETWEEN}
-                        >
-                            <Text gap="0" isActive title="Оплатить" size={TextSize.S} bold={TextBold.LIGHT} />
-                            <Text
-                                gap="0"
-                                isActive
-                                title={`${formatNumber(totalPrice)} ₽`}
-                                size={TextSize.M}
-                                bold={TextBold.MEDIUM}
-                            />
-                        </Button>
-                    )
-                    : (
-                        <Button
-                            onClick={handleFormSubmit}
-                            disabled={!checked || isNameInvalid || isEmailInvalid}
-                            theme={ThemeButton.DEFAULT}
-                            className={styles.sendBtn}
-                        >
-                            <Text gap="0" isActive title="Отправить" size={TextSize.S} bold={TextBold.LIGHT} />
-                        </Button>
-                    )
-            }
+            <Button
+                onClick={handleFormSubmit}
+                disabled={!checked || isNameInvalid || isEmailInvalid}
+                theme={ThemeButton.DEFAULT}
+                className={styles.sendBtn}
+            >
+                <Text gap="0" isActive title="Отправить" size={TextSize.S} bold={TextBold.LIGHT} />
+            </Button>
         </VStack>
     );
 });

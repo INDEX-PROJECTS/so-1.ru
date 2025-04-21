@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 // @ts-ignore
 
-import { memo } from 'react';
-import { classNames } from '@/shared/lib/classNames/classNames';
+import {memo} from 'react';
+import {classNames} from '@/shared/lib/classNames/classNames';
 import styles from './Documentation.module.scss';
-import { HStack, VStack } from '@/shared/ui/Stack';
-import { Text, TextBold, TextSize } from '@/shared/ui/Text/Text';
+import {HStack, VStack} from '@/shared/ui/Stack';
+import {Text, TextBold, TextSize} from '@/shared/ui/Text/Text';
 
 interface DocumentationProps {
     className?: string;
@@ -539,6 +539,20 @@ export const Documentation = memo(({ className }: DocumentationProps) => (
                                 textPrimary
                                 bold={TextBold.BOLD}
                                 text="662211, Красноярский край, Назаровский р-н, деревня Ярлыково, ул. Центральная, д 20"
+                                size={TextSize.L}
+                            />
+                        </HStack>
+                        <HStack max gap="4">
+                            <Text
+                                gap="0"
+                                title="Адрес офиса:"
+                                size={TextSize.S}
+                            />
+                            <Text
+                                gap="0"
+                                textPrimary
+                                bold={TextBold.BOLD}
+                                text="454136, Челябинская область, г. Челябинск, улица Молодогвардейцев, д. 60В, офис 301"
                                 size={TextSize.L}
                             />
                         </HStack>

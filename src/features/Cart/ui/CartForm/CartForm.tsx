@@ -206,7 +206,7 @@ export const CartForm = memo(({ className, onSuccess }: CartFormProps) => {
                     />
 
                     {
-                        import.meta.env.VITE_DOMEN_NAME === 'pro-zapchasti.online'
+                        import.meta.env.VITE_DOMEN_NAME === 'domain-name'
                             ? (
                                 <Button
                                     onClick={paymentYooKassa}

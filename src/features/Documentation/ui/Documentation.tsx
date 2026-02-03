@@ -545,7 +545,7 @@ export const Documentation = memo(({ className }: DocumentationProps) => (
                         <HStack max gap="4">
                             <Text
                                 gap="0"
-                                title="Адрес склада:"
+                                title="Наш склад:"
                                 size={TextSize.S}
                             />
                             <Text
@@ -553,6 +553,20 @@ export const Documentation = memo(({ className }: DocumentationProps) => (
                                 textPrimary
                                 bold={TextBold.BOLD}
                                 text="454081, г. Челябинск, ул. Героев Танкограда, д. 51-П"
+                                size={TextSize.L}
+                            />
+                        </HStack>
+                        <HStack max gap="4">
+                            <Text
+                                gap="0"
+                                title="Наш офис:"
+                                size={TextSize.S}
+                            />
+                            <Text
+                                gap="0"
+                                textPrimary
+                                bold={TextBold.BOLD}
+                                text="620063 Екатеринбург Улица Чайковского, 11 оф 207/1"
                                 size={TextSize.L}
                             />
                         </HStack>
